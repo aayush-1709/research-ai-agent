@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🔎 Research Summarizer Agent</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #2d3e50;
+        }
+
+        label {
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background: #4e91fc;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #3575e2;
+        }
+
+        .summary, .sources {
+            margin-top: 2rem;
+        }
+
+        .summary h3, .sources h3 {
+            color: #2d3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-content {
+            background-color: #f9f9f9;
+            padding: 1.25rem;
+            border-radius: 10px;
+            line-height: 1.7;
+            white-space: normal;
+        }
+
+        ul {
+            padding-left: 1.2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔎 Research Summarizer AI Agent</h1>
+
+        <form method="POST">
+            <label for="topic">Enter a Topic:</label>
+            <input type="text" name="topic" id="topic" placeholder="e.g., Impact of AI on Education" value="{{ topic }}">
+            <button type="submit" id="summarize-btn">Summarize</button>
+        </form>
+
+        {% if summary %}
+        <div class="summary">
+            <h3>📌 Summary</h3>
+            <div class="summary-content">
+                {{ summary|safe }}
+            </div>
+        </div>
+
+        <div class="sources">
+            <h3>🔗 Sources</h3>
+            <ul>
+                {% for link in links %}
+                    <li><a href="{{ link }}" target="_blank">{{ link }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById("topic").addEventListener("keyup", function(event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.key === "Enter") {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                // Trigger the button click
+                document.getElementById("summarize-btn").click();
+            }
+        });
+    </script>
+</body>
+</html>
